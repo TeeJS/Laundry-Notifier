@@ -37,10 +37,10 @@ You'll need to set up the normal networkng stuff, as well as your own weather en
 It wouldn't be hard to strip the temperature or weather out if wanted - I'm sure your AI of choice could help.
 
 ### 3. Home Assistant Configuration (Automation/Integration)
-Home Assistant uses two automations:
-laundry_washer_done.yaml [**yaml source for washer**](docs/laundry_washer_done.yaml)
-laundry_dryer_done.yaml [**yaml source for dryer**](docs/laundry_washer_done.yaml)
-they assume you already have Discord (or your preferred messaging method) set up.  That's beyond the sope of this project, but more details at: https://www.home-assistant.io/integrations/discord/.  For both you'll need to set your own DISCORD_CHANNEL_ID and @DISCORD_USER_IDs as well as your sensor entity IDs.  
+Home Assistant uses two automations:  
+laundry_washer_done.yaml [**yaml source for washer**](docs/laundry_washer_done.yaml)  
+laundry_dryer_done.yaml [**yaml source for dryer**](docs/laundry_washer_done.yaml)  
+they assume you already have Discord (or your preferred messaging method) set up.  That's beyond the sope of this project, but more details at: https://www.home-assistant.io/integrations/discord/.  For both you'll need to set your own DISCORD_CHANNEL_ID and @DISCORD_USER_IDs as well as your sensor entity IDs.    
 it also uses a binary sensor to make the vibration sensor a bit more reliable. it's state config (use your sensor entity id) is available here: [**yaml source for dryer binary sensor**](docs/dryer_running_state.yaml)
 
 ##  Licensing and Attribution
