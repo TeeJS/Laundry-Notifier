@@ -20,12 +20,19 @@ A **full, detailed Bill of Materials (BOM)**, including specific product links a
 The case is largley based on the ESP32 case by Grunt at:  https://www.printables.com/model/351248-esp32-wroom-32d-dupont-case/files
 It was created in TinkerCAD, you can copy it here: https://www.tinkercad.com/things/4x3nxkDhDTt-laundry-monitor-esphome-103 if you'd like to make your own modifications.  I'm sure most of the world is a better designer than me :)
 I left the ESP32 modular as I plan on adding a mount for the temperature sensor and possibly a motion sesnor in the future
+
 main base with screen and button mounts: [**download the main base with screen and button mounts**](3d-models/main%20base%20with%20screen%20and%20button%20mounts%20v1.03.stl)
+
 main lid: [**download the main lid**](3d-models/main%20lid%20v1.03.stl)
+
 ESP32 base: [**download the ESP32 base**](3d-models/ESP32%20base%20v1.03.stl)
+
 ESP32 carrier: [**download the ESP32 carrier**](3d-models/ESP32%20carrier%20v1.03.stl)
-ESP32 lid: [**download the ESP32 lid**](3d-models/main%20lid%20v1.03.stl)
+
+SP32 lid: [**download the ESP32 lid**](3d-models/main%20lid%20v1.03.stl)
+
 breadboard dummy (if you want to change mounting location): [**download the breadboard dummy**](3d-models/breadboard%20dummy.stl)
+
 
 ### 2. ESPHome Configuration (Firmware)
 The ESPHome displays the local humidity & temp from the sensor, local weather (from OpenWeathermap) and users. The complete file can be found here:
