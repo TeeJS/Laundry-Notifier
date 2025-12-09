@@ -13,4 +13,4 @@ here's the basic wiring structure again:
 
 What I did:  
 I labeled one of the breadboards with rows: V (voltage), G (ground), A (SDA), and L (SDL) 
-[![labeled breadboard](images/breadboard-1.jpeg)]
+[![labeled breadboard]](images/breadboard-1.jpeg)
