@@ -1,0 +1,59 @@
+alias: Laundry Washer Done - Discord
+description: Notify via Discord when the washer cycle is finished
+triggers:
+  - trigger: numeric_state
+    entity_id: sensor.laundry_room_washer_outlet_third_reality_inc_3rsp02028bz_power
+    above: 2
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+conditions:
+  - condition: time
+    after: "08:00:00"
+    before: "22:30:00"
+actions:
+  - wait_for_trigger:
+      - trigger: numeric_state
+        entity_id: sensor.laundry_room_washer_outlet_third_reality_inc_3rsp02028bz_power
+        below: 2
+        for:
+          hours: 0
+          minutes: 2
+          seconds: 0
+    continue_on_timeout: false
+  - action: notify.home_assistant_notifications
+    data:
+      target:
+        - "DISCORD_CHANNEL_ID"
+      message: >-
+        {% set panel = 'sensor.laundry_room_selector_display_laundry_user' %} {%
+        set panel_available =
+             (not is_state(panel, 'unavailable'))
+             and (not is_state(panel, 'unknown'))
+             and (states(panel) | trim != '') %}
+
+        {% if not panel_available %} (Washer done, but the selector panel is
+        offline — no user tagged) {% else %}
+
+        {% set id_map = {
+          "T.J.":  "@DISCORD_USER_ID",
+          "John": "@DISCORD_USER_ID",
+          "Paul": "@DISCORD_USER_ID",
+          "Ringo": "@DISCORD_USER_ID"
+        } %}
+
+        {% set user = states(panel) %} {% set discord_id = id_map.get(user) %}
+
+        {% if discord_id %} <@{{ discord_id }}> {% else %} (No user selected on
+        the panel) {% endif %}
+
+        {% endif %} {{ [
+          "The Great Soaking has ended! Behold, the recently purified fabrics rise from the watery depths!",
+          "Achievement Unlocked - Suds Master. Your clothes are now officially de-funked. Next Level - The Dryer.",
+          "Your socks have finished their swim practice! They are wet, clean, and ready for their next journey... to the dryer!",
+          "Splash! Splash! Sōsuke and Ponyo have finished their big water adventure! Your clothes are officially clean and waiting by the shore. Come grab your laundry before the tide goes out!",
+          "Clean they are. Damp, they remain. Dry them, you must.",
+          "Be advised - The aquatic sanitation process has reached its final conclusion. Delaying retrieval will result in the immediate deployment of... mildew."
+        ] | random }}
+mode: single
