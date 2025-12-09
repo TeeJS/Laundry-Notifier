@@ -1,0 +1,60 @@
+alias: Laundry Dryer Done - Discord
+description: Notify via Discord when the dryer cycle is finished
+triggers:
+  - trigger: state
+    entity_id: binary_sensor.dryer_running
+    to: "on"
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+conditions:
+  - condition: time
+    after: "08:00:00"
+    before: "22:30:00"
+actions:
+  - wait_for_trigger:
+      - trigger: state
+        entity_id: binary_sensor.dryer_running
+        to: "off"
+        for:
+          hours: 0
+          minutes: 2
+          seconds: 0
+    continue_on_timeout: false
+  - action: notify.home_assistant_notifications
+    data:
+      target:
+        - "DISCORD_CHANNEL_ID"
+      message: >-
+        {% set panel = 'sensor.laundry_room_selector_display_laundry_user' %} {%
+        set panel_available =
+             (not is_state(panel, 'unavailable'))
+             and (not is_state(panel, 'unknown'))
+             and (states(panel) | trim != '') %}
+
+        {% if not panel_available %} (Dryer done, but the selector panel is
+        offline — no user tagged) {% else %}
+
+        {% set id_map = {
+          "T.J.":  "@DISCORD_USER_ID",
+          "John": "@DISCORD_USER_ID",
+          "Paul": "@DISCORD_USER_ID",
+          "Ringo": "@DISCORD_USER_ID"
+        } %}
+
+        {% set user = states(panel) %} {% set discord_id = id_map.get(user) %}
+
+        {% if discord_id %} <@{{ discord_id }}> {% else %} (No user selected on
+        the panel) {% endif %}
+
+        {% endif %} {{ [
+          "I felt a great disturbance in the laundry room... as if millions of socks suddenly stopped. We must rescue your clothes from the Death Dryer.",
+          "The Catbus just arrived! Your clothes are waiting at the terminal, dry and ready for a ride.",
+          "Emergency Alert - Operation Tumble Dry is complete. Retrieve the steaming-hot evidence.",
+          "Behold! The textile rebirth is finished. The dryer gods demand immediate attention.",
+          "In a world of dampness... one machine stood alone. The dryer has finished its quest — will you accept yours and retrieve your clothes from the fires of evil?",
+          "Dry, your clothes are. Ready for retrieval, they are. Go, you must.",
+          "What a truly marvellous time we had! Your garments have completed their fantastic journey through the Tumble-Dry-Warm-Air-Cycle, and I simply must say, they look absolutely thrilled with the results! They await your gentle, appreciative touch."
+        ] | random }}
+mode: single
