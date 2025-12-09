@@ -25,7 +25,7 @@ main base with screen and button mounts: [**download the main base with screen a
 main lid: [**download the main lid**](3d-models/main%20lid%20v1.03.stl)  
 ESP32 base: [**download the ESP32 base**](3d-models/ESP32%20base%20v1.03.stl)  
 ESP32 carrier: [**download the ESP32 carrier**](3d-models/ESP32%20carrier%20v1.03.stl)  
-SP32 lid: [**download the ESP32 lid**](3d-models/main%20lid%20v1.03.stl)  
+ESP32 lid: [**download the ESP32 lid**](3d-models/main%20lid%20v1.03.stl)  
 breadboard dummy (if you want to change mounting location): [**download the breadboard dummy**](3d-models/breadboard%20dummy.stl)  
 
 
