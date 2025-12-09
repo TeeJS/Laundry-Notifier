@@ -31,7 +31,7 @@ breadboard dummy (if you want to change mounting location): [**download the brea
 
 ### 2. ESPHome Configuration (Firmware)
 The ESPHome displays the local humidity & temp from the sensor, local weather (from OpenWeathermap) and users. The complete file can be found here:
-[**View the YAML file](docs/esphome.yaml)  
+[**View the YAML file**](docs/esphome.yaml)  
 
 You'll need to set up the normal networkng stuff, as well as your own weather entity id in place of: weather.your_house_ID. Setting up OpenWeathermap is beyond the scope of this project - more deatils at: https://www.home-assistant.io/integrations/openweathermap/  
 It wouldn't be hard to strip the temperature or weather out if wanted - I'm sure your AI of choice could help.
