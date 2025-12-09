@@ -44,5 +44,20 @@ they assume you already have Discord (or your preferred messaging method) set up
 it also uses a binary sensor to make the vibration sensor a bit more reliable. it's state config (use your sensor entity id) is available here: [**yaml source for dryer binary sensor**](docs/dryer_running_state.yaml)
 
 ##  Licensing and Attribution
+This repository contains two distinct types of content, each governed by a separate license:
+
+1. Software and Configuration
+All configuration files (.yaml), automation scripts, and documentation files (.md, .txt) are licensed under the MIT License.
+
+This allows you maximum flexibility for reuse. You can view the full details in the root LICENSE file.
+
+2. 3D Model Attribution (CC BY 4.0)
+The 3D model files (found in the /3d-models directory) are licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0).
+
+The license for these derivative files is CC BY 4.0 because the case design is largely based on an existing work, which requires attribution:
+
+Original Work: "ESP32 WROOM 32D Dupont Case" by Grunt
+
+Source: https://www.printables.com/model/351248-esp32-wroom-32d-dupont-case/files
 
 ##  Contributing
