@@ -36,7 +36,22 @@ The ESPHome displays the local humidity & temp from the sensor, local weather (f
 You'll need to set up the normal networkng stuff, as well as your own weather entity id in place of: weather.your_house_ID. Setting up OpenWeathermap is beyond the scope of this project - more deatils at: https://www.home-assistant.io/integrations/openweathermap/  
 It wouldn't be hard to strip the temperature or weather out if wanted - I'm sure your AI of choice could help.
 
-### 3. Home Assistant Configuration (Automation/Integration)
+### 2. ESPHome Configuration (WIRING)
+Here is the high level overview of the connections:  
+| Component | Interface | ESP32 GPIO Pin | Function |
+| :--- | :--- | :--- | :--- |
+| **OLED Display** (SSD1306) | I2C (SDA) | **GPIO 21** | Data Line |
+| **OLED Display** (SSD1306) | I2C (SCL) | **GPIO 22** | Clock Line |
+| **SHT3xD** Temp/Humidity Sensor | I2C (SDA) | **GPIO 21** | Data Line (Shared with Display) |
+| **SHT3xD** Temp/Humidity Sensor | I2C (SCL) | **GPIO 22** | Clock Line (Shared with Display) |
+| **User Button T.J.** | GPIO (Input) | **GPIO 25** | Input (Configured with **internal pull-up** and **inverted** logic) |
+| **User Button John** | GPIO (Input) | **GPIO 26** | Input (Configured with **internal pull-up** and **inverted** logic) |
+| **User Button Paul** | GPIO (Input) | **GPIO 27** | Input (Configured with **internal pull-up** and **inverted** logic) |
+| **User Button Ringo** | GPIO (Input) | **GPIO 14** | Input (Configured with **internal pull-up** and **inverted** logic) |
+
+See more at [**ESP32 Wiring**}(docs/esp32_wiring.md)
+
+### 4. Home Assistant Configuration (Automation/Integration)
 Home Assistant uses two automations:  
 laundry_washer_done.yaml [**yaml source for washer**](docs/laundry_washer_done.yaml)  
 laundry_dryer_done.yaml [**yaml source for dryer**](docs/laundry_washer_done.yaml)  
