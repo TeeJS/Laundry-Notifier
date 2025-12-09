@@ -1,0 +1,1 @@
+{{ is_state('binary_sensor.laundry_drier_vibration_sensor_third_reality_inc_3rvs01031z', 'on') }}
