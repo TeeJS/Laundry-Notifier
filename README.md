@@ -17,10 +17,28 @@ A **full, detailed Bill of Materials (BOM)**, including specific product links a
 ##  Setup and Installation
 
 ### 1. 3D Model Printing (Hardware)
+The case is largley based on the ESP32 case by Grunt at:  https://www.printables.com/model/351248-esp32-wroom-32d-dupont-case/files
+It was created in TinkerCAD, you can copy it here: https://www.tinkercad.com/things/4x3nxkDhDTt-laundry-monitor-esphome-103 if you'd like to make your own modifications.  I'm sure most of the world is a better designer than me :)
+I left the ESP32 modular as I plan on adding a mount for the temperature sensor and possibly a motion sesnor in the future
+main base with screen and button mounts: [**download the main base with screen and button mounts**](3d-models/main%20base%20with%20screen%20and%20button%20mounts%20v1.03.stl)
+main lid: [**download the main lid**](3d-models/main%20lid%20v1.03.stl)
+ESP32 base: [**download the ESP32 base**](3d-models/ESP32%20base%20v1.03.stl)
+ESP32 carrier: [**download the ESP32 carrier**](3d-models/ESP32%20carrier%20v1.03.stl)
+ESP32 lid: [**download the ESP32 lid**](3d-models/main%20lid%20v1.03.stl)
+breadboard dummy (if you want to change mounting location): [**download the breadboard dummy**](3d-models/breadboard%20dummy.stl)
 
 ### 2. ESPHome Configuration (Firmware)
+The ESPHome displays the local humidity & temp from the sensor, local weather (from OpenWeathermap) and users. The complete file can be found here:
+[**View the YAML file](docs/esphome.yaml)
+You'll need to set up the normal networkng stuff, as well as your own weather entity id in place of: weather.your_house_ID. Setting up OpenWeathermap is beyond the scope of this project - more deatils at: https://www.home-assistant.io/integrations/openweathermap/
+It wouldn't be hard to strip the temperature or weather out if wanted - I'm sure your AI of choice could help.
 
 ### 3. Home Assistant Configuration (Automation/Integration)
+Home Assistant uses two automations:
+laundry_washer_done.yaml [**yaml source for washer**](docs/laundry_washer_done.yaml)
+laundry_dryer_done.yaml [**yaml source for dryer**](docs/laundry_washer_done.yaml)
+they assume you already have Discord (or your preferred messaging method) set up.  That's beyond the sope of this project, but more details at: https://www.home-assistant.io/integrations/discord/.  For both you'll need to set your own DISCORD_CHANNEL_ID and @DISCORD_USER_IDs as well as your sensor entity IDs.  
+it also uses a binary sensor to make the vibration sensor a bit more reliable. it's state config (use your sensor entity id) is available here: [**yaml source for dryer binary sensor**](docs/dryer_running_state.yaml)
 
 ##  Licensing and Attribution
 
