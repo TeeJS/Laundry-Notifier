@@ -1,4 +1,5 @@
 # Laundry-Notifier
+![project image](https://github.com/TeeJS/Laundry-Notifier/blob/main/images/PXL_20251209_004040392.jpg)
 a Home Assistant project to provide laundry notifications
 
 ESPHome device that sets a laundry user that in conjunction with a power sensor on the washer and vibration sensor on the dryer sends out Discord messages when the laundry is done. 
