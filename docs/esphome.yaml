@@ -1,0 +1,342 @@
+substitutions:
+  page_cycle: "10s"
+
+esphome:
+  name: "laundry-selector-display"
+  friendly_name: Laundry room selector display
+
+  # Reset user on every boot
+  on_boot:
+    priority: -10
+    then:
+      - text_sensor.template.publish:
+          id: laundry_user
+          state: ""
+      - lambda: |-
+          id(laundry_user_selected) = false;
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+logger:
+
+api:
+  encryption:
+    key: !secret esphome_api_key_common
+
+  services:
+    - service: reset_laundry_user
+      then:
+        - text_sensor.template.publish:
+            id: laundry_user
+            state: ""
+        - lambda: |-
+            id(laundry_user_selected) = false;
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "test screen"
+    password: !secret wifi_password
+
+network:
+
+captive_portal:
+
+time:
+  - platform: homeassistant
+    id: time_ntp
+
+ota:
+  platform: esphome
+  password: !secret ota_password_common
+
+i2c:
+  id: bus_a
+  sda: 21
+  scl: 22
+  scan: true
+
+globals:
+  - id: display_page
+    type: int
+    restore_value: no
+    initial_value: '0'
+
+  - id: laundry_user_selected
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+
+interval:
+  - interval: ${page_cycle}
+    then:
+      - lambda: |-
+          id(display_page) = (id(display_page) + 1) % 4;
+      - component.update: oled_display
+
+sensor:
+  - platform: sht3xd
+    address: 0x44
+    temperature:
+      name: "LRD Temperature"
+      id: sht31_temperature
+      unit_of_measurement: "°F"
+      accuracy_decimals: 1
+      filters:
+        - lambda: return (x * 9.0 / 5.0) + 32.0;
+    humidity:
+      name: "LRD Humidity"
+      id: sht31_humidity
+      unit_of_measurement: "%"
+      accuracy_decimals: 1
+    update_interval: 30s
+
+  - platform: homeassistant
+    id: ha_weather_temperature
+    entity_id: weather.your_house_ID
+    attribute: temperature
+    on_value:
+      then:
+        - component.update: oled_display
+
+  - platform: homeassistant
+    id: ha_weather_humidity
+    entity_id: weather.your_house_ID
+    attribute: humidity
+    on_value:
+      then:
+        - component.update: oled_display
+
+text_sensor:
+  - platform: homeassistant
+    id: ha_weather_status
+    entity_id: weather.your_house_ID
+    on_value:
+      then:
+        - component.update: oled_display
+
+  - platform: template
+    id: laundry_user
+    name: "Laundry User"
+    update_interval: never
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: 25
+      mode: INPUT_PULLUP
+      inverted: true
+    id: btn_tj
+    name: "Laundry Button T.J."
+    on_press:
+      then:
+        - text_sensor.template.publish:
+            id: laundry_user
+            state: "T.J."
+        - lambda: |-
+            id(laundry_user_selected) = true;
+            id(display_page) = 1;
+        - component.update: oled_display
+
+  - platform: gpio
+    pin:
+      number: 26
+      mode: INPUT_PULLUP
+      inverted: true
+    id: btn_john
+    name: "Laundry Button John"
+    on_press:
+      then:
+        - text_sensor.template.publish:
+            id: laundry_user
+            state: "John"
+        - lambda: |-
+            id(laundry_user_selected) = true;
+            id(display_page) = 1;
+        - component.update: oled_display
+
+  - platform: gpio
+    pin:
+      number: 27
+      mode: INPUT_PULLUP
+      inverted: true
+    id: btn_paul
+    name: "Laundry Button Paul"
+    on_press:
+      then:
+        - text_sensor.template.publish:
+            id: laundry_user
+            state: "Paul"
+        - lambda: |-
+            id(laundry_user_selected) = true;
+            id(display_page) = 1;
+        - component.update: oled_display
+
+  - platform: gpio
+    pin:
+      number: 14
+      mode: INPUT_PULLUP
+      inverted: true
+    id: btn_ringo
+    name: "Laundry Button Ringo"
+    on_press:
+      then:
+        - text_sensor.template.publish:
+            id: laundry_user
+            state: "Ringo"
+        - lambda: |-
+            id(laundry_user_selected) = true;
+            id(display_page) = 1;
+        - component.update: oled_display
+
+font:
+  - file: "Roboto-Regular.ttf"
+    id: oled_font
+    size: 14
+    glyphs: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:-_/ %.°|"
+
+  - file: "Roboto-Regular.ttf"
+    id: oled_font_big
+    size: 18
+    glyphs: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:-_/ %.°"
+
+  - file: "DejaVuSans.ttf"
+    id: icon_font
+    size: 48
+    glyphs: "☀☁❄⌂"
+
+display:
+  - platform: ssd1306_i2c
+    id: oled_display
+    model: "SSD1306 128x64"
+    address: 0x3C
+    i2c_id: bus_a
+    rotation: 0
+    lambda: |-
+      it.clear();
+
+      const int screen_w = 128;
+      const int screen_h = 64;
+      const int center_x = screen_w / 2;
+
+      const int icon_x = 32;
+      const int icon_y = 44;
+      const int temp_x = 96;
+      const int temp_y = 26;
+      const int hum_x  = 96;
+      const int hum_y  = 46;
+
+      // PAGE 0 — Indoor Temp/Humidity
+      if (id(display_page) == 0) {
+        auto now = id(time_ntp).now();
+        if (now.is_valid()) {
+          it.strftime(center_x, 0, id(oled_font_big), TextAlign::TOP_CENTER, "%I:%M %p", now);
+        } else {
+          it.printf(center_x, 0, id(oled_font_big), TextAlign::TOP_CENTER, "--:-- --");
+        }
+
+        it.printf(icon_x, icon_y, id(icon_font), TextAlign::CENTER, "⌂");
+
+        if (!isnan(id(sht31_temperature).state)) {
+          it.printf(temp_x, temp_y, id(oled_font_big), TextAlign::TOP_CENTER,
+                    "%.0f° F", id(sht31_temperature).state);
+        } else {
+          it.printf(temp_x, temp_y, id(oled_font_big), TextAlign::TOP_CENTER, "--° F");
+        }
+
+        if (!isnan(id(sht31_humidity).state)) {
+          it.printf(hum_x, hum_y, id(oled_font_big), TextAlign::TOP_CENTER,
+                    "%.0f %%", id(sht31_humidity).state);
+        } else {
+          it.printf(hum_x, hum_y, id(oled_font_big), TextAlign::TOP_CENTER, "-- %%");
+        }
+      }
+
+      // PAGE 1 & 3 — User Selector Grid
+      else if (id(display_page) == 1 || id(display_page) == 3) {
+        it.printf(center_x, 0, id(oled_font), TextAlign::TOP_CENTER, "Laundry User");
+
+        const int box_x = 0;
+        const int box_y = 16;
+        const int box_w = screen_w;
+        const int box_h = screen_h - box_y;
+
+        const int quad_w = box_w / 2;
+        const int quad_h = box_h / 2;
+
+        bool has_selection = id(laundry_user_selected);
+        auto sel = id(laundry_user).state;
+
+        if (has_selection) {
+          if (sel == "T.J.") {
+            it.filled_rectangle(box_x, box_y, quad_w, quad_h, COLOR_ON);
+          } else if (sel == "John") {
+            it.filled_rectangle(box_x + quad_w, box_y, quad_w, quad_h, COLOR_ON);
+          } else if (sel == "Paul") {
+            it.filled_rectangle(box_x, box_y + quad_h, quad_w, quad_h, COLOR_ON);
+          } else if (sel == "Ringo") {
+            it.filled_rectangle(box_x + quad_w, box_y + quad_h, quad_w, quad_h, COLOR_ON);
+          }
+        }
+
+        it.rectangle(box_x, box_y, box_w, box_h);
+        const int mid_x = box_x + box_w / 2;
+        const int mid_y = box_y + box_h / 2;
+        it.line(mid_x, box_y, mid_x, box_y + box_h);
+        it.line(box_x, mid_y, box_x + box_w, mid_y);
+
+        const int left_center_x = box_x + box_w / 4;
+        const int right_center_x = box_x + 3 * box_w / 4;
+        const int top_center_y = box_y + box_h / 4;
+        const int bottom_center_y = box_y + 3 * box_h / 4;
+
+        auto render_name = [&](int x, int y, const char* name) {
+          if (has_selection && sel == name) {
+            it.printf(x, y, id(oled_font), COLOR_OFF, TextAlign::CENTER, "%s", name);
+          } else {
+            it.printf(x, y, id(oled_font), TextAlign::CENTER, "%s", name);
+          }
+        };
+
+        render_name(left_center_x,  top_center_y,    "T.J.");
+        render_name(right_center_x, top_center_y,    "John");
+        render_name(left_center_x,  bottom_center_y, "Paul");
+        render_name(right_center_x, bottom_center_y, "Ringo");
+      }
+
+      // PAGE 2 — Outdoor Weather
+      else if (id(display_page) == 2) {
+        auto now = id(time_ntp).now();
+        if (now.is_valid()) {
+          it.strftime(center_x, 0, id(oled_font_big), TextAlign::TOP_CENTER, "%I:%M %p", now);
+        } else {
+          it.printf(center_x, 0, id(oled_font_big), TextAlign::TOP_CENTER, "--:-- --");
+        }
+
+        const char* icon = "☁";
+        if (id(ha_weather_status).has_state()) {
+          auto s = id(ha_weather_status).state;
+          if (s == "sunny" || s == "clear") icon = "☀";
+          else if (s == "snow" || s == "snowy" || s == "snowy-rainy") icon = "❄";
+        }
+
+        it.printf(icon_x, icon_y, id(icon_font), TextAlign::CENTER, "%s", icon);
+
+        if (!isnan(id(ha_weather_temperature).state)) {
+          it.printf(temp_x, temp_y, id(oled_font_big), TextAlign::TOP_CENTER,
+                    "%.0f° F", id(ha_weather_temperature).state);
+        } else {
+          it.printf(temp_x, temp_y, id(oled_font_big), TextAlign::TOP_CENTER, "--° F");
+        }
+
+        if (!isnan(id(ha_weather_humidity).state)) {
+          it.printf(hum_x, hum_y, id(oled_font_big), TextAlign::TOP_CENTER,
+                    "%.0f %%", id(ha_weather_humidity).state);
+        } else {
+          it.printf(hum_x, hum_y, id(oled_font_big), TextAlign::TOP_CENTER, "-- %%");
+        }
+      }
