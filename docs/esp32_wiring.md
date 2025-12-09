@@ -12,4 +12,5 @@ here's the basic wiring structure again:
 | **User Button Ringo** | GPIO (Input) | **GPIO 14** | Input (Configured with **internal pull-up** and **inverted** logic) |
 
 What I did:  
-connected 
+I labeled one of the breadboards with rows: V (voltage), G (ground), A (SDA), and L (SDL) 
+[![labeled breadboard](images/breadboard-1.jpeg)]
