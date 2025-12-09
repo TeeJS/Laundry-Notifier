@@ -75,4 +75,3 @@ Original Work: "ESP32 WROOM 32D Dupont Case" by Grunt
 
 Source: https://www.printables.com/model/351248-esp32-wroom-32d-dupont-case/files
 
-##  Contributing
