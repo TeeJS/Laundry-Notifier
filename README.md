@@ -17,8 +17,8 @@ A **full, detailed Bill of Materials (BOM)**, including specific product links a
 ##  Setup and Installation
 
 ### 1. 3D Model Printing (Hardware)
-The case is largley based on the ESP32 case by Grunt at:  https://www.printables.com/model/351248-esp32-wroom-32d-dupont-case/files
-It was created in TinkerCAD, you can copy it here: https://www.tinkercad.com/things/4x3nxkDhDTt-laundry-monitor-esphome-103 if you'd like to make your own modifications.  I'm sure most of the world is a better designer than me :)
+The case is largley based on the ESP32 case by Grunt at:  https://www.printables.com/model/351248-esp32-wroom-32d-dupont-case/files  
+I created it in TinkerCAD, you can copy it here: https://www.tinkercad.com/things/4x3nxkDhDTt-laundry-monitor-esphome-103 if you'd like to make your own modifications.  I'm sure most of the world is a better designer than me :)
 I left the ESP32 modular as I plan on adding a mount for the temperature sensor and possibly a motion sesnor in the future
 
 main base with screen and button mounts: [**download the main base with screen and button mounts**](3d-models/main%20base%20with%20screen%20and%20button%20mounts%20v1.03.stl)  
