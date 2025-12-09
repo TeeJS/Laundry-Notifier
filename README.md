@@ -8,6 +8,11 @@ ESPHome device that sets a laundry user that in conjunction with a power sensor 
 uses sensors to monitor the laundry machines (I use power for the washer and vibration for the drier).  Sets a "user" based on button presses and sends a @ mention to them - although I'm sure you could configure it to use your messaging platform of choice!
 
 ##  Components and Parts List
+This project requires several components, including an ESPHome controller, sensors for the washer and dryer
+
+A **full, detailed Bill of Materials (BOM)**, including specific product links and cost estimates, can be found here:
+
+[**View the Complete BOM**](docs/BOM.md)
 
 ##  Setup and Installation
 
