@@ -49,7 +49,7 @@ Here is the high level overview of the connections:
 | **User Button Paul** | GPIO (Input) | **GPIO 27** | Input |
 | **User Button Ringo** | GPIO (Input) | **GPIO 14** | Input |
 
-See more at [**ESP32 Wiring**}(docs/esp32_wiring.md)
+See more at [**ESP32 Wiring**](docs/esp32_wiring.md)
 
 ### 4. Home Assistant Configuration (Automation/Integration)
 Home Assistant uses two automations:  
