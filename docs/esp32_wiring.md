@@ -13,5 +13,15 @@ here's the basic wiring structure again:
 
 What I did:  
 I labeled one of the breadboards with rows: V (voltage), G (ground), A (SDA), and L (SDL)  
-![labeled breadboard](https://github.com/TeeJS/Laundry-Notifier/blob/main/images/breadboard-1.jpeg)
+![labeled breadboard](https://github.com/TeeJS/Laundry-Notifier/blob/main/images/breadboard-s1.jpeg)  
+
+I then connected the ESP32 pins: 3V3 to V, GND to G, 21 to A and 22 to L
+![ESP32 connections](https://github.com/TeeJS/Laundry-Notifier/blob/main/images/esp-s1.jpg)  
+
+I then connected the display to the corresponding connections in the breadboard  
+![Display connections](https://github.com/TeeJS/Laundry-Notifier/blob/main/images/s2.jpg)    
+
+and repeated the process (in the next row of the breadboard) for the temperature sensor  
+![Display connections](https://github.com/TeeJS/Laundry-Notifier/blob/main/images/s3-sensor.jpg)    
+
 
