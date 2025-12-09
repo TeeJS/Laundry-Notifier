@@ -8,4 +8,4 @@
 optional:
 * SHT31-D or other sensor for temp & humidity - I used: https://www.amazon.com/dp/B0B5TN8LZB ~$4.25
 
-total, as built: $41.25
+total, as built: $41.25 - but I'm sure you can faid the parts cheaper on AliExpress!
